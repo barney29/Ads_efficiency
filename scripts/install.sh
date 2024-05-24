@@ -21,6 +21,8 @@ echo "Setting Up Redash local development"
 
 
 sudo apt -y install build-essential curl docker-compose pwgen python3-venv xvfb
+
+
 sudo usermod -aG docker $USER
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
 nvm install --lts 18
@@ -36,6 +38,11 @@ if ! command -v yarn &> /dev/null; then
     sudo npm install --global yarn
 fi
 yarn
+yarn unlink "@redash/viz"
+export NVM_DIR="$HOME/.nvm" [ -s "$NVM_DIR/nvm.sh"] && \. "$NVM_DIR/nvm.sh"
+nvm install 20.0
+nvm use 20.0
+nvm alias default 20.0 
 yarn build
 make compose_build
 docker image list
